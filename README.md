@@ -59,7 +59,7 @@ Todo projeto foi balizado sob as diretrizes do "Escopo e Elementos Obrigatórios
 
 O projeto foi estruturado seguindo as práticas de **desenvolvimento seguro**, com atenção especial às mitigações do **OWASP Top 10:2025**:
 
-- **Server VPS**: SSH access key, root desativado, senhas desativadas, Fail2Ban ativado (4 x 24h), HTTPS e Log of Audit
+- **Server VPS**: SSH access key, root desativado, senhas desativadas, Fail2Ban ativado (4 x 24h), DNS, HTTPS e Log of Audit
 - **Controle de acesso**: Usuários só acessam seus próprios dados; rotas protegidas por autenticação e autorização
 - **Proteção contra injeção**: Utilização de ORM (Eloquent) com prepared statements e SQL injection protection
 - **Headers de segurança**: CSP, HSTS, X-Frame-Options e outras proteções configuradas
