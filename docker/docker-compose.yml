@@ -1,0 +1,99 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/app/Dockerfile.production
+    restart: unless-stopped
+    expose:
+      - "80"
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE:-arsdb}
+      - DB_USERNAME=${DB_USERNAME:-ars_user}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - CACHE_STORE=redis
+      - SESSION_DRIVER=redis
+      - QUEUE_CONNECTION=redis
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - HASH_DRIVER=argon2id
+      - ROUTE_PREFIX=alphaview
+      - APP_NAME=Alphaview
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=${APP_URL:-https://ctrl.sytes.net/alphaview}
+      - FRONTEND_URL=${FRONTEND_URL:-https://ctrl.sytes.net}
+      - APP_KEY=${APP_KEY}
+      - SANCTUM_STATEFUL_DOMAINS=${SANCTUM_STATEFUL_DOMAINS:-ctrl.sytes.net}
+      - SESSION_DOMAIN=${SESSION_DOMAIN:-ctrl.sytes.net}
+      - SESSION_SECURE_COOKIE=true
+      - SESSION_ENCRYPT=true
+      - ASSET_URL=${ASSET_URL:-/alphaview}
+      - LOG_LEVEL=warning
+      - PASSWORD_PEPPER=${PASSWORD_PEPPER}
+      - MAIL_MAILER=${MAIL_MAILER:-smtp}
+      - MAIL_HOST=${MAIL_HOST:-smtp.gmail.com}
+      - MAIL_PORT=${MAIL_PORT:-587}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
+      - MAIL_FROM_NAME=${MAIL_FROM_NAME:-Alphaview Serviços Residenciais}
+      - SEED_ADMIN=${SEED_ADMIN:-false}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    volumes:
+      - app-storage:/var/www/html/storage
+      - app-bootstrap:/var/www/html/bootstrap/cache
+    networks:
+      - internal
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --maxmemory 128mb --maxmemory-policy volatile-lru --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-arsdb}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME:-ars_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  app-storage:
+  app-bootstrap:
+  redis-data:

@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /api/
+Disallow: /storage/contracts/
+Disallow: /storage/private/
+Allow: /
+
+Sitemap: https://ctrl.sytes.net/alphaview/sitemap.xml

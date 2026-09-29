@@ -1,0 +1,102 @@
+# npm
+/node_modules
+
+# Composer
+/vendor
+/composer.phar
+
+# Build assets (gerados pelo entrypoint)
+/public/build
+
+# Symlink local (junction Windows — não versionável)
+/public/assets
+
+# Laravel
+/public/hot
+/public/storage
+storage/framework/views
+storage/framework/cache
+storage/framework/sessions
+/storage/*.key
+/storage/pail
+
+# IDE
+/.codex
+/.cursor/
+/.idea
+/.nova
+/.phpactor.json
+/.phpunit.result.cache
+/.vscode
+/.zed
+/docs/*
+!docs/img/*
+_ide_helper.php
+Homestead.json
+Homestead.yaml
+
+# Coverage e cache de testes
+coverage/
+.phpunit.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+*.swp
+*.swo
+*~
+*.bak
+*.old
+*.orig
+
+# Cópias de conflito de sync (OneDrive/Dropbox/Drive) — não commitar
+*_conf*
+
+# Agent workspace
+/.mimocode
+
+# Arquivos sensiveis
+.env
+.env.backup
+.env.production
+.env.testing
+.env.local
+.env.staging
+.env.development
+.env.ci
+.env.ci
+/auth.json
+docker/.env
+
+# Chaves e certificados
+/docker/ssl/
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cert
+
+# Docker overrides (podem conter segredos locais)
+docker-compose.override.yml
+
+# Dumps de banco de dados
+*.sql
+*.sql.gz
+*.dump
+database.sqlite
+
+# Logs
+Memory*
+SECURITY*
+PROGRESS*
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Backups
+*.zip
