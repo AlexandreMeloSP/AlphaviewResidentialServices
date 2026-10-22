@@ -25,7 +25,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="text-lg font-bold text-gray-900">Politica de Privacidade</h3>
-                <button class="modal-close" onclick="closeModal('modal-privacidade')">&times;</button>
+                <button class="modal-close" data-close="modal-privacidade">&times;</button>
             </div>
             <div class="modal-scroll">
                 <div class="prose prose-sm max-w-none text-gray-700 space-y-4">
@@ -55,7 +55,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="text-lg font-bold text-gray-900">Termos de Uso</h3>
-                <button class="modal-close" onclick="closeModal('modal-termos')">&times;</button>
+                <button class="modal-close" data-close="modal-termos">&times;</button>
             </div>
             <div class="modal-scroll">
                 <div class="prose prose-sm max-w-none text-gray-700 space-y-4">
@@ -177,9 +177,9 @@
                             class="mt-1 h-4 w-4 rounded border-gray-300 text-[#f4623a] focus:ring-[#f4623a]">
                         <label for="accepted_terms" class="text-sm text-gray-600">
                             Li e aceito a
-                            <a href="javascript:void(0)" onclick="openModal('modal-privacidade')" class="font-semibold hover:underline" style="color: #f4623a;">Politica de Privacidade</a>
+                            <a href="#" data-open="modal-privacidade" class="font-semibold hover:underline" style="color: #f4623a;">Politica de Privacidade</a>
                             e os
-                            <a href="javascript:void(0)" onclick="openModal('modal-termos')" class="font-semibold hover:underline" style="color: #f4623a;">Termos de Uso</a>.
+                            <a href="#" data-open="modal-termos" class="font-semibold hover:underline" style="color: #f4623a;">Termos de Uso</a>.
                         </label>
                     </div>
 
@@ -245,6 +245,17 @@
     document.querySelectorAll('.modal-overlay').forEach(function(modal) {
         modal.addEventListener('click', function(e) {
             if (e.target === modal) closeModal(modal.id);
+        });
+    });
+    document.querySelectorAll('[data-open]').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal(el.getAttribute('data-open'));
+        });
+    });
+    document.querySelectorAll('[data-close]').forEach(function(el) {
+        el.addEventListener('click', function() {
+            closeModal(el.getAttribute('data-close'));
         });
     });
 
