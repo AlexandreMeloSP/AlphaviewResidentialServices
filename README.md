@@ -82,7 +82,7 @@ A configuração **SSL/TLS** do servidor foi submetida ao teste Qualys SSL Labs,
 | Camada             | Tecnologias                                                   |
 | ------------------ | ------------------------------------------------------------- |
 | **Frontend**       | React 19, TypeScript, Tailwind CSS 4, Vite                    |
-| **Backend**        | Laravel 13.8, PHP 8.3 + Dompdf / Browsershot                  |
+| **Backend**        | Laravel 13.8, PHP patch 8.3.36 + Dompdf / Browsershot         |
 | **Banco de dados** | MySQL 8.4 + Redis                                             |
 | **Deploy**         | Oracle VPS + Dokploy + Docker, Nginx, SSL/TLS (Let's Encrypt) |
 | **CI/CD**          | GitHub Actions                                                |
