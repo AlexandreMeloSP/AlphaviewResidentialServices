@@ -10,8 +10,15 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     zip \
     unzip \
-    nginx \
     supervisor \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# nginx 1.30.7 (nginx.org) — CVE-2026-123007, CVE-2026-123633; fixar nova versão aqui ao atualizar
+RUN curl -fsSL https://nginx.org/keys/nginx_signing.key -o /usr/share/keyrings/nginx-signing.asc \
+    && echo "deb [signed-by=/usr/share/keyrings/nginx-signing.asc] https://nginx.org/packages/debian trixie nginx" > /etc/apt/sources.list.d/nginx.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends nginx=1.30.7-1~trixie \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
